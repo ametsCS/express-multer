@@ -1,14 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
-</head>
-<body>
-<form action="/profile" method="post" enctype="multipart/form-data">
-    Izena: <input type="text" id="name" name="izena" placeholder="Sartu zure izena"/>
-    <input type="file" name="avatar"/>
-    <input type="submit" vale="submit">
-</form>
-</body>
+    <script>
+      function sendData() {
+        // generate a new FormData object with the form data
+        var formData = new FormData(document.forms.namedItem("formularioa"));
+        // fetch post
+        fetch("/profile", {
+          method: "POST",
+          body: formData,
+        })
+          .then(function (response) {
+            return response.text();
+          })
+          .then(function (data) {
+            // Reemplaza todo el contenido HTML en el cuerpo
+            document.body.innerHTML = data;
+          });
+      }
+
+      window.onload = () => {
+        // add event listener on form submit
+        document.forms.namedItem("formularioa").addEventListener(
+          "submit",
+          function (event) {
+            event.preventDefault();
+            sendData();
+          }
+        );
+      };
+    </script>
+  </head>
+  <body>
+    <form method="post" name="formularioa">
+      Izena:
+      <input type="text" name="username" placeholder="Sartu zure izena" /><br />
+      <input type="file" name="avatar" />
+      <input type="submit" />
+    </form>
+    <div id="response"></div> <!-- Elemento para mostrar la respuesta -->
+  </body>
 </html>

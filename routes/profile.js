@@ -5,7 +5,7 @@ var router = express.Router();
 const path = require('path');
 
 //sortu aldagai bat uneko direktorio globala gordetzeko.
-const uploadDirectory = path.join(__dirname, '../uploads');
+const uploadDirectory = path.join(__dirname, '../public/uploads');
 
 //multer sortu eta fitxategia non gordetzen den eta zer izenekin gordetzen den aldatzeko multer.diskStorage funtzioa erabili.
 const multer  = require('multer')
@@ -55,8 +55,8 @@ router.get('/', function(req, res, next) {
 router.post('/', upload.single('avatar'), function (req, res, next) {
     console.log(req.file)
     // req.body will hold the text fields, if there were any
-    const fileLink = `<a href="http://localhost:3000/uploads/${req.file.filename}">${req.file.filename}</a>`;
-    res.send(`Zure izena: ${req.body.izena}. Fitxategia: ${fileLink}`);
+    const fileLink = `<a href="http://localhost:3000/uploads/${req.file.filename}">http://localhost:3000/uploads/${req.file.filename}</a>`;
+    res.send(`Zure izena: ${req.body.username}. Fitxategia: ${fileLink}`);
 })
 
 
